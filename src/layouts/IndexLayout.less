@@ -1,0 +1,123 @@
+:global {
+  .home {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    transition: padding 0.2s;
+    min-width: 1200px;
+    .ng-content{
+      position: relative;
+      .ng-header{
+        padding-left: 0;
+        box-sizing: border-box;
+        width: 100%;
+        height: 64px;
+        line-height: 64px;
+        font-size: 14px;
+        box-shadow: 0 1px 4px 0 rgba(0, 21, 41, 0.12);
+        z-index: 2;
+        transition: padding 0.2s;
+        background-color: #fff;
+        position: fixed;
+        .anticon-menu-fold, .anticon-menu-unfold{
+          margin-left: 24px;
+          cursor: pointer;
+          svg{
+            width: 20px;
+            height: 20px;
+          }
+        }
+        .logout{
+          margin-left: 24px;
+          cursor: pointer;
+        }
+      }
+    }
+    .ng-nav{
+      position: relative;
+      width: 256px;
+      height: 100%;
+      box-sizing: border-box;
+      box-shadow: 2px 0px 6px 0px rgba(0,21,41,0.35);
+      z-index: 1;
+      transition: width 0.2s;
+      overflow: hidden;
+      background-color: #001529;
+      z-index: 99;
+      .logo{
+        height: 64px;
+        line-height: 64px;
+        text-align: center;
+        font-size: 18px;
+        color: $white;
+        background-color: #002140;
+        width: 100%;
+        img{
+            height: 36px;
+        }
+        span{
+            margin-left: 16px;
+        }
+      }
+      .ng-nav-scroll{
+        width: 280px;
+        overflow-y: auto;
+        box-sizing: border-box;
+        height: 100%;
+        &>div{
+          width: 256px;
+          .ng-menu{
+            height: 100%;
+          }
+        }
+      }
+    }
+    &.ng-nav-hidden{
+      padding-left: 80px;
+      .ng-nav{
+        width: 80px;
+        .ng-nav-scroll{
+          width: 104px;
+          &>div{
+            width: 64px;
+          }
+        }
+      }
+      .ng-header{
+        padding-left: 80px;
+      }
+    }
+    .main{
+      position: relative;
+      width: 100%;
+      height: 100%;
+      box-sizing: border-box;
+      padding-top: 117px;
+      background-color: #F0F2F5;
+      .ng-breadcrumb{
+        position: absolute;
+        top: 64px;
+        width: 100%;
+        background-color: #fff;
+        padding: 16px 24px;
+        z-index: 1;
+        .breadcrumb{
+          display: inline-block;
+        }
+      }
+      .main-scroll{
+        position: relative;
+        padding: 54px 24px 0 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        .main-view{
+          padding: 24px 0 0 24px;
+        }
+      }
+    }
+  }
+}

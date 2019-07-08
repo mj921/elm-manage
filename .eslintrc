@@ -1,0 +1,29 @@
+{
+  "extends": "umi",
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "rules": {
+    "eqeqeq": "warn",
+    "comma-spacing": ["warn", { "before": false, "after": true }],
+    "func-call-spacing": ["warn", "never"],
+    "no-mixed-spaces-and-tabs": "warn",
+    "no-trailing-spaces": "warn",
+    "quotes": ["warn", "double"],
+    "semi": ["warn", "always"],
+    "constructor-super": "warn",
+    "no-const-assign": "warn",
+    "key-spacing": ["warn", { "beforeColon": false }],
+    "object-curly-spacing": ["warn", "always"],
+    "indent": ["warn", 2, { "SwitchCase": 1, "MemberExpression": 0 }],
+    "no-useless-constructor": "off",
+    "no-dupe-keys": "error",
+    "react/jsx-max-props-per-line": "warn",
+    "react/jsx-no-duplicate-props": "error",
+    "react/jsx-first-prop-new-line": ["warn", "multiline-multiprop"]
+  }
+}

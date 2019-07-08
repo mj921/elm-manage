@@ -1,0 +1,26 @@
+
+html, body, :global(#root) {
+  height: 100%;
+}
+:global{
+  .search-form, .table-list{
+    margin-bottom: 24px;
+    .ant-card-head{
+      .ant-card-extra{
+        .ant-btn{
+          &:not(:first-child){
+            margin-left: 5px;
+          }
+        }
+      }
+    }
+  }
+  .form-content{
+    padding: 24px;
+    background-color: #fff;
+    .form-main{
+      margin: 0 auto;
+      width: 600px;
+    }
+  }
+}

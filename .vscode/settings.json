@@ -1,0 +1,13 @@
+{
+  //保存时eslint自动修复错误
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    {
+      "language": "vue",
+      "autoFix": true
+    }
+  ],
+  "eslint.autoFixOnSave": true,
+  "files.eol": "\n"
+}
