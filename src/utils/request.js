@@ -2,6 +2,7 @@ import fetch from "dva/fetch";
 import { message } from "antd";
 import ErrorCode from "../config/errorCode";
 import { BaseUrl } from "../config";
+import app from "../index";
 
 function parseJSON(response) {
   return response.json();
@@ -37,7 +38,8 @@ async function checkStatus(response) {
 export default function request(url, { data = {}, method = "get" }) {
   url = BaseUrl + url;
   const headers = {
-    "content-type": "application/json"
+    "content-type": "application/json",
+    Authorization: localStorage.getItem("token") || ""
   };
   const opt = {
     method,
@@ -67,6 +69,11 @@ export default function request(url, { data = {}, method = "get" }) {
         case ErrorCode.RequestSuccess:
           resolve(res);
           break;
+        case ErrorCode.LoginInvalidation:
+          app._history.push("/login");
+          message.error(res.message);
+          reject(res);
+          break;
         default:
           message.error(res.message);
           reject(res);
@@ -77,6 +84,7 @@ export default function request(url, { data = {}, method = "get" }) {
 
     })
     .catch(err => {
+      console.log(err);
       if (err.response) {
         let msg = "error";
         switch (err.response.status) {

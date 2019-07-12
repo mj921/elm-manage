@@ -1,9 +1,10 @@
 export const RequestSuccess = 20000;
-export const TokenInvalid = 52001;
-export const LoginError = 50600;
+export const ServerError = 50000;
+export const LoginInvalidation = 50001;
+
 const ErrorCode = {
   RequestSuccess,
-  TokenInvalid,
-  LoginError
+  ServerError,
+  LoginInvalidation
 };
 export default ErrorCode;

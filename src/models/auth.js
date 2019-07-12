@@ -1,11 +1,13 @@
 import { routeConfig } from "../routes/routeConfig";
-import { loginApi, logoutApi } from "../services/common";
+import { loginApi, logoutApi } from "../services/commonApi";
 import { message } from "antd";
 import { routerRedux } from "dva/router";
+const userInfo = localStorage.getItem("userInfo");
 export default {
   namespace: "auth",
   state: {
     username: localStorage.getItem("username") || "",
+    userInfo: userInfo ? JSON.parse(userInfo) : {},
     breadcrumb: [],
     selectedKey: localStorage.getItem("selectedKey") || "",
   },
@@ -40,9 +42,16 @@ export default {
       }
     },
     *login({ payload: { username, password } }, { call, put }) {
+      let result;
       yield loginApi({ username, password }).then(res => {
-        message.success("登录成功");
+        localStorage.setItem("token", res.data.token);
+        result = res.data;
       });
+      yield put({
+        type: "UPDATE_USERINFO",
+        payload: result
+      });
+      message.success("登录成功");
       yield put({
         type: "UPDATE_USERNAME",
         payload: username
@@ -57,7 +66,6 @@ export default {
         type: "UPDATE_USERNAME",
         payload: ""
       });
-      yield put(routerRedux.push("/login"));
     }
   },
   reducers: {
@@ -92,6 +100,15 @@ export default {
     UPDATE_USERNAME(state, { payload: username }) {
       localStorage.setItem("username", username);
       state.username = username;
+      return {
+        ...state
+      };
+    },
+    UPDATE_USERINFO(state, { payload: userInfo }) {
+      localStorage.setItem("userInfo", JSON.stringify(userInfo));
+      state.userInfo = {
+        ...userInfo
+      };
       return {
         ...state
       };

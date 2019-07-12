@@ -15,36 +15,37 @@ export const BaseStatusText = {
   Enabled: "启用",
   Disabled: "禁用"
 };
-/** 订单类型 */
-export const OrderType = {
+/** 商户状态 */
+export const MerchantStatus = {
   /** 全部 */
   All: ALL,
-  /** 午餐 */
-  Lunch: 0,
-  /** 晚餐 */
-  Dinner: 1
+  /** 待审核 */
+  WaitAudit: 0,
+  /** 待开业 */
+  WaitOpen: 1,
+  /** 开业 */
+  Open: 2,
+  /** 休息 */
+  Rest: 3,
+  /** 封禁 */
+  Disabled: 4,
+  /** 审核不通过 */
+  AuditFalied: -1
 };
-/** 订单类型文案 */
-export const OrderTypeText = {
-  All: "全部",
-  Lunch: "午餐",
-  Dinner: "晚餐"
-};
-/** 订单类型 */
-export const OrderStatus = {
+/** 商户状态 */
+export const MerchantStatusText = {
   /** 全部 */
-  All: ALL,
-  /** 待处理 */
-  ToBeProcessed: 0,
-  /** 已处理 */
-  Processed: 1,
-  /** 已取消 */
-  Canceled: -1
-};
-/** 订单类型文案 */
-export const OrderStatusText = {
   All: "全部",
-  ToBeProcessed: "待处理",
-  Processed: "已处理",
-  Canceled: "已取消"
+  /** 待审核 */
+  WaitAudit: "待审核",
+  /** 待开业 */
+  WaitOpen: "待开业",
+  /** 开业 */
+  Open: "开业",
+  /** 休息 */
+  Rest: "休息",
+  /** 封禁 */
+  Disabled: "封禁",
+  /** 审核不通过 */
+  AuditFalied: "审核不通过"
 };

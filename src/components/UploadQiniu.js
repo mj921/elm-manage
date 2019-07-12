@@ -1,12 +1,11 @@
 import React, { Component } from "react";
 import { Upload, Button, Icon, message } from "antd";
-import { getUploadApi } from "../services/common";
 import { qiniuHost } from "../config";
 import "./UploadQiniu.less";
+import { getUploadApi } from "../services/commonApi";
 
 class UploadQiniu extends Component {
-  constructor() {
-    super();
+  componentDidMount() {
     this.getUploadToken();
   }
   state = {
@@ -14,17 +13,22 @@ class UploadQiniu extends Component {
     fileList: []
   }
   getUploadToken() {
-    return new Promise((resolve, reject) => {
+    if (sessionStorage.getItem("qiniuToken")) {
+      this.setState({
+        uploadData: {
+          token: sessionStorage.getItem("qiniuToken")
+        }
+      });
+    } else {
       getUploadApi().then(res => {
+        sessionStorage.setItem("qiniuToken", res.data);
         this.setState({
           uploadData: {
             token: res.data
           }
         });
-      }).catch(err => {
-        reject(err);
       });
-    });
+    }
   };
   uploadChange({ file }) {
     if (file.status === "done") {

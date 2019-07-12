@@ -32,6 +32,7 @@ class IndexLayout extends Component {
     this.props.dispatch({
       type: "auth/logout"
     });
+    this.props.history.push("/login");
   }
   render() {
     const { username, breadcrumb, history } = this.props;
