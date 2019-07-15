@@ -1,4 +1,4 @@
-import { MerchantManage, AddMerchant, EditMerchant, AuditMerchant, MerchantInfo, EditMerchantInfo } from "./loadComponents";
+import { MerchantManage, AddMerchant, EditMerchant, AuditMerchant, MerchantInfo, EditMerchantInfo, DishManage, AddDish, EditDish } from "./loadComponents";
 
 const adminRoutes = {
   "/merchant-manage": {
@@ -35,9 +35,27 @@ const merchantRoutes = {
   },
   "/merchant-info/edit": {
     path: "/merchant-info/edit",
-    label: "编辑",
+    label: "编辑信息",
     component: EditMerchantInfo,
     selectedKey: "merchant-info"
+  },
+  "/dish-manage": {
+    path: "/dish-manage",
+    label: "菜品管理",
+    component: DishManage,
+    selectedKey: "dish-manage"
+  },
+  "/dish-manage/add": {
+    path: "/dish-manage/add",
+    label: "新增菜品",
+    component: AddDish,
+    selectedKey: "dish-manage"
+  },
+  "/dish-manage/edit": {
+    path: "/dish-manage/edit/:id",
+    label: "编辑菜品",
+    component: EditDish,
+    selectedKey: "dish-manage"
   }
 };
 

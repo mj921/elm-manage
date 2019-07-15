@@ -8,5 +8,9 @@ export default {
     icon: "setting",
     label: "我的信息",
     name: "merchant-info"
+  }, {
+    icon: "setting",
+    label: "菜品管理",
+    name: "dish-manage"
   }]
 };

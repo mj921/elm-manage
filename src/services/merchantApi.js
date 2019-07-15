@@ -15,6 +15,12 @@ export const getMerchantApi = function(id) {
     data: {}
   });
 };
+export const getMerchantTypesApi = function(id) {
+  return request(`${baseApi}/types`, {
+    method: "get",
+    data: { id }
+  });
+};
 export const addMerchantApi = function(data = {}) {
   return request(baseApi, {
     method: "post",

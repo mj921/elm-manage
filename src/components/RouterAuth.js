@@ -15,6 +15,7 @@ class RouterAuth extends Component {
       routes = routeList.merchantRoutes;
       menus = menuConfig.merchantMenus;
     }
+    console.log(routes);
     return (
       <Router history={ this.props.history }>
         <Switch>

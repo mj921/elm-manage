@@ -13,22 +13,14 @@ class UploadQiniu extends Component {
     fileList: []
   }
   getUploadToken() {
-    if (sessionStorage.getItem("qiniuToken")) {
+    getUploadApi().then(res => {
+      sessionStorage.setItem("qiniuToken", res.data);
       this.setState({
         uploadData: {
-          token: sessionStorage.getItem("qiniuToken")
+          token: res.data
         }
       });
-    } else {
-      getUploadApi().then(res => {
-        sessionStorage.setItem("qiniuToken", res.data);
-        this.setState({
-          uploadData: {
-            token: res.data
-          }
-        });
-      });
-    }
+    });
   };
   uploadChange({ file }) {
     if (file.status === "done") {

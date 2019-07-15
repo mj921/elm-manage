@@ -39,3 +39,15 @@ export const EditMerchantInfo = Loadable({
   loader: () => import("../pages/merchant/MerchantInfo/EditMerchantInfo"),
   loading: RouterLoading
 });
+export const DishManage = Loadable({
+  loader: () => import("../pages/merchant/DishManage"),
+  loading: RouterLoading
+});
+export const AddDish = Loadable({
+  loader: () => import("../pages/merchant/DishManage/AddDish"),
+  loading: RouterLoading
+});
+export const EditDish = Loadable({
+  loader: () => import("../pages/merchant/DishManage/EditDish"),
+  loading: RouterLoading
+});

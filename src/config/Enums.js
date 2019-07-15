@@ -49,3 +49,18 @@ export const MerchantStatusText = {
   /** 审核不通过 */
   AuditFalied: "审核不通过"
 };
+/** 菜品状态 */
+export const DishStatus = {
+  /** 全部 */
+  All: ALL,
+  /** 上架 */
+  Enabled: 1,
+  /** 下架 */
+  Disabled: 0
+};
+/** 通用状态文案 */
+export const DishStatusText = {
+  All: "全部",
+  Enabled: "上架",
+  Disabled: "下架"
+};
