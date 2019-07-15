@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Form, Input, Table, Button, Card, Modal, message, Select, Icon, Tooltip } from "antd";
 import { enumsToList } from "../../utils";
-import { BaseStatus, MerchantStatus } from "../../config/Enums";
+import { MerchantStatus } from "../../config/Enums";
 import { Page } from "../../config";
 import { getMerchantsApi, deleteMerchantApi, updateMerchantStatusApi } from "../../services/merchantApi";
 
@@ -33,10 +33,19 @@ const SearchForm = Form.create({
           )
         }
       </Form.Item>
+      <Form.Item label="商户手机号">
+        {
+          getFieldDecorator("phone", {
+            initialValue: ""
+          })(
+            <Input allowClear />
+          )
+        }
+      </Form.Item>
       <Form.Item label="商户状态">
         {
           getFieldDecorator("status", {
-            initialValue: BaseStatus.All
+            initialValue: MerchantStatus.All
           })(
             <Select style={ { width: "176px" } }>
               {
@@ -64,7 +73,7 @@ class MerchantManage extends Component {
         value: ""
       },
       status: {
-        value: BaseStatus.All
+        value: MerchantStatus.All
       }
     },
     dataSource: [],
@@ -109,7 +118,7 @@ class MerchantManage extends Component {
           value: ""
         },
         status: {
-          value: BaseStatus.All
+          value: MerchantStatus.All
         }
       }
     },
