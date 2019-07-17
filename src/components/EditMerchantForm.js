@@ -6,13 +6,19 @@ import UploadQiniu from "./UploadQiniu";
 import { getAreasApi } from "../services/areaApi";
 
 export default class EditMerchantForm extends Component {
-  constructor(props) {
-    super(props);
-    this.initAreaList(props);
+  componentDidUpdate(props) {
+    console.log(props, !this.state.initFlag, this.props.initFlag);
+    if (!this.state.initFlag && this.props.initFlag) {
+      this.initAreaList(props);
+      this.setState({
+        initFlag: true
+      });
+    }
   }
   state = {
     materialList: [],
-    areaList: []
+    areaList: [],
+    initFlag: false
   }
   save() {
     this.props.form.validateFields((err, values) => {
@@ -192,8 +198,7 @@ export default class EditMerchantForm extends Component {
                 <Cascader
                   options={ this.state.areaList }
                   loadData={ targetOptions => { this.loadArea(targetOptions); } }
-                  placeholder=""
-                  changeOnSelect />
+                  placeholder=""/>
               )
             }
           </Form.Item>

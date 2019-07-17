@@ -1,7 +1,8 @@
 import React, { Component } from "react";
-import { Form, Card, Button } from "antd";
-import { getMerchantApi } from "../../services/merchantApi";
+import { Form, Card, Button, message } from "antd";
+import { getMerchantApi, updateMerchantStatusApi } from "../../services/merchantApi";
 import { connect } from "dva";
+import { MerchantStatus } from "../../config/Enums";
 
 class MerchantInfo extends Component {
   constructor(props) {
@@ -18,7 +19,9 @@ class MerchantInfo extends Component {
       distributionFee: "",
       distributionTime: "",
       startDistributionFee: "",
-      distance: ""
+      distance: "",
+      score: 0,
+      monthSale: 0
     }
   }
   getMerchant() {
@@ -26,6 +29,18 @@ class MerchantInfo extends Component {
     .then(res => {
       this.setState({
         merchant: { ...res.data }
+      });
+    });
+  }
+  open() {
+    updateMerchantStatusApi({
+      id: this.props.id,
+      status: MerchantStatus.Open
+    }).then(() => {
+      message.success("开业成功");
+      this.props.dispatch({
+        type: "auth/updateStatus",
+        payload: MerchantStatus.Open
       });
     });
   }
@@ -41,6 +56,7 @@ class MerchantInfo extends Component {
   }
   render() {
     const { merchant } = this.state;
+    const { userInfo } = this.props;
     const labelCol = {
       span: 6
     };
@@ -54,6 +70,13 @@ class MerchantInfo extends Component {
           className="form-content"
           extra={
             <div>
+              {
+                userInfo.status === MerchantStatus.WaitOpen ?
+                  (<Button
+                    type="primary"
+                    style={{ marginRight: "5px" }}
+                    onClick={ () => { this.open(); }}>正式营业</Button>) : ""
+              }
               <Button
                 type="primary"
                 onClick={ () => { this.props.history.push("/merchant-info/edit"); }}>编辑</Button>
@@ -77,6 +100,8 @@ class MerchantInfo extends Component {
             <Form.Item label="起送价">{ merchant.startDistributionFee } 元</Form.Item>
             <Form.Item label="配送时间">{ this.distributionTime }</Form.Item>
             <Form.Item label="距离">{ merchant.distance < 1000 ? merchant.distance + " m" : (merchant.distance / 1000).toFixed(1) + " km" }</Form.Item>
+            <Form.Item label="月售">{ merchant.monthSale }</Form.Item>
+            <Form.Item label="评分">{ merchant.score }</Form.Item>
           </Form>
         </Card>
       </div>
@@ -84,5 +109,6 @@ class MerchantInfo extends Component {
   }
 }
 export default connect(({ auth }) => ({
-  id: auth.userInfo.id || 0
+  id: auth.userInfo.id || 0,
+  userInfo: auth.userInfo
 }))(MerchantInfo);

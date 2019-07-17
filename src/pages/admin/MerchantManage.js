@@ -21,7 +21,7 @@ const SearchForm = Form.create({
   }
 })(props => {
   const { getFieldDecorator } = props.form;
-  const statusList = enumsToList("BaseStatus");
+  const statusList = enumsToList("MerchantStatus");
   return (
     <Form layout="inline">
       <Form.Item label="商户名称">
@@ -228,6 +228,14 @@ class MerchantManage extends Component {
       render(text) {
         return <span>{ text < 1000 ? text + " m" : (text / 1000).toFixed(1) + " km" }</span>;
       }
+    }, {
+      dataIndex: "monthSale",
+      title: "月售",
+      align: "center"
+    }, {
+      dataIndex: "score",
+      title: "评分",
+      align: "center"
     }, {
       dataIndex: "statusStr",
       title: "状态",

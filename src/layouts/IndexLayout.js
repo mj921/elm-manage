@@ -1,10 +1,12 @@
 import React, { Component } from "react";
 import RouterAuth from "../components/RouterAuth";
-import { Layout, Menu, Icon, Breadcrumb, Dropdown } from "antd";
+import { Layout, Menu, Icon, Breadcrumb, Dropdown, message } from "antd";
 import { connect } from "dva";
 import "./IndexLayout.less";
 import { withRouter, Link } from "dva/router";
 import menuConfig from "../config/menuConfig";
+import { MerchantStatus } from "../config/Enums";
+import { updateMerchantStatusApi } from "../services/merchantApi";
 
 const { Sider, Header, Content } = Layout;
 
@@ -34,8 +36,20 @@ class IndexLayout extends Component {
     });
     this.props.history.push("/login");
   }
+  changeMerchantStatus(status) {
+    updateMerchantStatusApi({
+      id: this.props.userInfo.id,
+      status
+    }).then(() => {
+      message.success((status === MerchantStatus.Rest ? "休息" : "开业") + "成功");
+      this.props.dispatch({
+        type: "auth/updateStatus",
+        payload: status
+      });
+    });
+  }
   render() {
-    const { username, breadcrumb, history } = this.props;
+    const { username, breadcrumb, history, userInfo } = this.props;
     let menus;
     if (username === "") {
       history.push("/login");
@@ -83,13 +97,20 @@ class IndexLayout extends Component {
               <Dropdown
                 overlay={ (
                   <Menu>
+                    {
+                      username !== "admin" && (userInfo.status === MerchantStatus.Open || userInfo.status === MerchantStatus.Rest) ? (
+                        <Menu.Item
+                          key={ 0 }
+                          onClick={ () => { this.changeMerchantStatus(5 - userInfo.status); } }>{ userInfo.status === MerchantStatus.Open ? "休息" : "开业" }</Menu.Item>
+                      ) : ""
+                    }
                     <Menu.Item
                       key={ 1 }
                       onClick={ () => { this.logout(); } }>退出登录</Menu.Item>
                   </Menu>
                 ) }
                 trigger={["click"]}>
-                <div style={{ float: "right", cursor: "pointer" }}>
+                <div style={{ float: "right", cursor: "pointer", color: username === "admin" || (userInfo.status !== MerchantStatus.Open && userInfo.status !== MerchantStatus.Rest) ? "inherit" : (userInfo.status === MerchantStatus.Open ? "#52c41a" : "#f5222d") }}>
                   { this.props.username } <Icon type="down" />
                 </div>
               </Dropdown>
@@ -131,6 +152,7 @@ class IndexLayout extends Component {
 export default withRouter(connect(({ auth }) => {
   return {
     username: auth.username,
+    userInfo: auth.userInfo,
     breadcrumb: auth.breadcrumb,
     selectedKey: auth.selectedKey
   };

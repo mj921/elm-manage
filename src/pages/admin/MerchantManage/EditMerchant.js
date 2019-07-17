@@ -4,6 +4,22 @@ import { withRouter } from "dva/router";
 import { getMerchantApi } from "../../../services/merchantApi";
 import EditMerchantForm from "../../../components/EditMerchantForm";
 
+const EditForm = Form.create({
+  mapPropsToFields(props) {
+    const fields = {};
+    Object.keys(props.fields).forEach(key => {
+      fields[key] = Form.createFormField({
+        ...props.fields[key],
+        value: (typeof props.fields[key] === "object" && !(props.fields[key] instanceof Array)) ? props.fields[key].value : props.fields[key]
+      });
+    });
+    return fields;
+  },
+  onFieldsChange(props, fields) {
+    props.onChange(fields);
+  }
+})(EditMerchantForm);
+
 class EditMerchant extends Component {
   componentDidMount() {
     this.getMerchant();
@@ -20,7 +36,8 @@ class EditMerchant extends Component {
       distributionTime: "",
       startDistributionFee: "",
       distance: ""
-    }
+    },
+    initFlag: false
   }
   fieldsChange(fields) {
     this.setState({
@@ -29,32 +46,23 @@ class EditMerchant extends Component {
   }
   getMerchant() {
     getMerchantApi(this.props.match.params.id)
-    .then(res =>
+    .then(res => {
       this.setState({
         fields: { ...res.data, area: [res.data.provinceId || 0, res.data.cityId || 0, res.data.areaId || 0] }
-      }));
+      }, () => {
+        this.setState({
+          initFlag: true
+        });
+      });
+    });
   }
   render () {
-    const EditForm = Form.create({
-      mapPropsToFields(props) {
-        const fields = {};
-        Object.keys(props.fields).forEach(key => {
-          fields[key] = Form.createFormField({
-            ...props.fields[key],
-            value: (typeof props.fields[key] === "object" && !(props.fields[key] instanceof Array)) ? props.fields[key].value : props.fields[key]
-          });
-        });
-        return fields;
-      },
-      onFieldsChange(props, fields) {
-        props.onChange(fields);
-      }
-    })(EditMerchantForm);
     return <EditForm
       fields={ this.state.fields }
       onChange={ fields => { this.fieldsChange(fields); } }
       history={ this.props.history }
-      id={ this.props.match && this.props.match.params.id || 0 } />;
+      id={ this.props.match && this.props.match.params.id || 0 }
+      initFlag={ this.state.initFlag } />;
   }
 }
 

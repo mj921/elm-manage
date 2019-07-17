@@ -2,7 +2,12 @@ import { routeConfig } from "../routes/routeConfig";
 import { loginApi, logoutApi } from "../services/commonApi";
 import { message } from "antd";
 import { routerRedux } from "dva/router";
+import { MerchantStatusText, MerchantStatus } from "../config/Enums";
 const userInfo = localStorage.getItem("userInfo");
+const MerchantStatusObj = {};
+Object.keys(MerchantStatus).forEach(key => {
+  MerchantStatusObj[MerchantStatus[key]] = MerchantStatusText[key];
+});
 export default {
   namespace: "auth",
   state: {
@@ -66,6 +71,12 @@ export default {
         type: "UPDATE_USERNAME",
         payload: ""
       });
+    },
+    *updateStatus({ payload: status }, { call, put }) {
+      yield put({
+        type: "UPDATE_STATUS",
+        payload: status
+      });
     }
   },
   reducers: {
@@ -109,6 +120,17 @@ export default {
       state.userInfo = {
         ...userInfo
       };
+      return {
+        ...state
+      };
+    },
+    UPDATE_STATUS(state, { payload: status }) {
+      state.userInfo = {
+        ...state.userInfo,
+        status,
+        statusStr: MerchantStatusObj[status]
+      };
+      localStorage.setItem("userInfo", JSON.stringify(state.userInfo));
       return {
         ...state
       };
