@@ -180,10 +180,11 @@ class MerchantManage extends Component {
       dataIndex: "address",
       title: "商户地址",
       align: "center",
+      width: 150,
       render(text, record) {
         return (
           <Tooltip title={ (record.areaName ? record.areaName + " " : "") + text }>
-            <span style={{ width: "100px", whiteSpace: "nowrap", textOverflow: "ellipsis" }}>{ (record.areaName ? record.areaName + " " : "") + text }</span>
+            <span style={{ width: "150px", whiteSpace: "nowrap", textOverflow: "ellipsis", overflow: "hidden" }}>{ (record.areaName ? record.areaName + " " : "") + text }</span>
           </Tooltip>
         );
       }

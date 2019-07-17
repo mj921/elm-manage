@@ -184,10 +184,11 @@ class DishManage extends Component {
       dataIndex: "introduce",
       title: "菜品描述",
       align: "center",
-      render(text, record) {
+      width: 150,
+      render(text) {
         return (
           <Tooltip title={ text }>
-            <span style={{ width: "100px", whiteSpace: "nowrap", textOverflow: "ellipsis" }}>{ text }</span>
+            <div style={{ width: "150px", whiteSpace: "nowrap", textOverflow: "ellipsis", overflow: "hidden" }}>{ text }</div>
           </Tooltip>
         );
       }
