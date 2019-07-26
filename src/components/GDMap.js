@@ -52,6 +52,9 @@ export default class GDMap extends Component {
       amap
     });
   }
+  componentWillUnmount() {
+    this.state.amap.destroy();
+  }
   choiceAddress(item) {
     this.props.onChange(item);
   }
