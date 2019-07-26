@@ -95,7 +95,7 @@ class MerchantInfo extends Component {
                 alt="logo" />
             </Form.Item>
             <Form.Item label="登录密码">{ merchant.password }</Form.Item>
-            <Form.Item label="商户地址">{ merchant.address }</Form.Item>
+            <Form.Item label="商户地址">{ merchant.position + " " + merchant.address }</Form.Item>
             <Form.Item label="配送费">{ merchant.distributionFee } 元</Form.Item>
             <Form.Item label="起送价">{ merchant.startDistributionFee } 元</Form.Item>
             <Form.Item label="配送时间">{ this.distributionTime }</Form.Item>

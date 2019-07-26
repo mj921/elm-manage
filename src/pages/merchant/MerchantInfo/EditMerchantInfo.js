@@ -11,7 +11,7 @@ const EditForm = Form.create({
     Object.keys(props.fields).forEach(key => {
       fields[key] = Form.createFormField({
         ...props.fields[key],
-        value: (typeof props.fields[key] === "object" && !(props.fields[key] instanceof Array)) ? props.fields[key].value : props.fields[key]
+        value: (props.fields[key] && typeof props.fields[key] === "object") ? props.fields[key].value : props.fields[key]
       });
     });
     return fields;
@@ -29,16 +29,17 @@ class EditMerchant extends Component {
     fields: {
       name: "",
       phone: "",
+      position: "",
+      longitude: "",
+      latitude: "",
       address: "",
       logo: "",
-      area: [],
       password: "",
       distributionFee: "",
       distributionTime: "",
       startDistributionFee: "",
       distance: ""
-    },
-    initFlag: false
+    }
   }
   fieldsChange(fields) {
     this.setState({
@@ -49,11 +50,7 @@ class EditMerchant extends Component {
     getMerchantApi(this.props.id)
     .then(res => {
       this.setState({
-        fields: { ...res.data, area: [res.data.provinceId || 0, res.data.cityId || 0, res.data.areaId || 0] }
-      }, () => {
-        this.setState({
-          initFlag: true
-        });
+        fields: { ...res.data }
       });
     });
   }
@@ -63,8 +60,9 @@ class EditMerchant extends Component {
       onChange={ fields => { this.fieldsChange(fields); } }
       history={ this.props.history }
       id={ this.props.id || 0 }
-      backUrl="/merchant-info"
-      initFlag={ this.state.initFlag } />;
+      latitude={ this.state.latitude }
+      longitude={ this.state.longitude }
+      backUrl="/merchant-info" />;
   }
 }
 

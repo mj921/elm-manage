@@ -1,135 +1,32 @@
 import React, { Component } from "react";
 import { updateMerchantApi } from "../services/merchantApi";
-import { message, Form, Input, Button, Cascader } from "antd";
+import { message, Form, Input, Button } from "antd";
 import { validPhone, validPassword, validNum, validInt } from "../utils/validators";
 import UploadQiniu from "./UploadQiniu";
-import { getAreasApi } from "../services/areaApi";
+import ChoiceMap from "./ChoiceMap";
 
 export default class EditMerchantForm extends Component {
-  componentDidUpdate(props) {
-    console.log(props, !this.state.initFlag, this.props.initFlag);
-    if (!this.state.initFlag && this.props.initFlag) {
-      this.initAreaList(props);
-      this.setState({
-        initFlag: true
-      });
-    }
-  }
-  state = {
-    materialList: [],
-    areaList: [],
-    initFlag: false
+  constructor(props) {
+    super(props);
+    this.state = {
+      longitude: props.longitude || "",
+      latitude: props.latitude || ""
+    };
   }
   save() {
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        updateMerchantApi({ ...values, id: this.props.id, provinceId: values.area[0], cityId: values.area[1], areaId: values.area[2] || 0 }).then(() => {
+        updateMerchantApi({ ...values, id: this.props.id, longitude: this.state.longitude || this.props.fields.longitude || "", latitude: this.state.latitude || this.props.fields.latitude || "" }).then(() => {
           message.success("编辑成功");
           this.props.history.push(this.props.backUrl || "/merchant-manage");
         });
       }
     });
   }
-  initAreaList(props) {
-    this.getAreas(-1, res => {
-      if (props.fields.provinceId) {
-        this.getAreas(props.fields.provinceId, res1 => {
-          if (props.fields.cityId) {
-            this.getAreas(props.fields.cityId, res2 => {
-              this.setState({
-                areaList: res.data.map(item => {
-                  if (item.id === props.fields.provinceId) {
-                    return {
-                      label: item.name,
-                      value: item.id,
-                      level: item.level,
-                      children: res1.data.map(jtem => {
-                        if (jtem.id === props.fields.cityId) {
-                          return {
-                            label: jtem.name,
-                            value: jtem.id,
-                            level: jtem.level,
-                            children: res2.data.map(ktem => ({
-                              label: ktem.name,
-                              value: ktem.id,
-                              level: ktem.level
-                            }))
-                          };
-                        }
-                        return {
-                          label: jtem.name,
-                          value: jtem.id,
-                          level: jtem.level
-                        };
-                      }),
-                      isLeaf: false
-                    };
-                  }
-                  return {
-                    label: item.name,
-                    value: item.id,
-                    level: item.level,
-                    isLeaf: false
-                  };
-                })
-              });
-            });
-          } else {
-            this.setState({
-              areaList: res.data.map(item => {
-                if (item.id === props.provinceId) {
-                  return {
-                    label: item.name,
-                    value: item.id,
-                    level: item.level,
-                    children: res1.data.map(jtem => ({
-                      label: jtem.name,
-                      value: jtem.id,
-                      level: jtem.level,
-                      isLeaf: false
-                    })),
-                    isLeaf: false
-                  };
-                }
-                return {
-                  label: item.name,
-                  value: item.id,
-                  level: item.level,
-                  isLeaf: false
-                };
-              })
-            });
-          }
-        });
-      } else {
-        this.setState({
-          areaList: res.data.map(item => ({
-            label: item.name,
-            value: item.id,
-            level: item.level,
-            isLeaf: false
-          }))
-        });
-      }
-    });
-  }
-  getAreas(parentId, callback) {
-    getAreasApi(parentId).then(callback);
-  }
-  loadArea(selectedOptions) {
-    const targetOption = selectedOptions[selectedOptions.length - 1];
-    targetOption.loading = true;
-    this.getAreas(targetOption.value, res => {
-      targetOption.loading = false;
-      targetOption.children = res.data.map(item => ({
-        label: item.name,
-        value: item.id,
-        level: item.level,
-        isLeaf: targetOption.level === 2
-      }));
-      this.setState({
-        areaList: [...this.state.areaList]
-      });
+  positionChange(position) {
+    this.setState({
+      longitude: position.location.lng + "",
+      latitude: position.location.lat + ""
     });
   }
   render() {
@@ -189,24 +86,19 @@ export default class EditMerchantForm extends Component {
           </Form.Item>
           <Form.Item label="商户地址">
             {
-              getFieldDecorator("area", {
+              getFieldDecorator("position", {
                 rules: [
                   { required: true, message: "请选择商户地址"  },
                   { validator: validArea }
                 ]
               })(
-                <Cascader
-                  options={ this.state.areaList }
-                  loadData={ targetOptions => { this.loadArea(targetOptions); } }
-                  placeholder=""/>
+                <ChoiceMap onChange={ (value, position) => { this.positionChange(position); } } />
               )
             }
           </Form.Item>
           <Form.Item label="详细地址">
             {
-              getFieldDecorator("address", {
-                rules: [{ required: true, message: "请输入详细地址"  }]
-              })(
+              getFieldDecorator("address")(
                 <Input.TextArea />
               )
             }

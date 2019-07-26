@@ -183,8 +183,8 @@ class MerchantManage extends Component {
       width: 150,
       render(text, record) {
         return (
-          <Tooltip title={ (record.areaName ? record.areaName + " " : "") + text }>
-            <span style={{ width: "150px", whiteSpace: "nowrap", textOverflow: "ellipsis", overflow: "hidden" }}>{ (record.areaName ? record.areaName + " " : "") + text }</span>
+          <Tooltip title={ (record.position ? record.position + " " : "") + text }>
+            <span style={{ width: "150px", whiteSpace: "nowrap", textOverflow: "ellipsis", overflow: "hidden" }}>{ (record.position ? record.position + " " : "") + text }</span>
           </Tooltip>
         );
       }

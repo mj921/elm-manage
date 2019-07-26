@@ -10,7 +10,7 @@ const EditForm = Form.create({
     Object.keys(props.fields).forEach(key => {
       fields[key] = Form.createFormField({
         ...props.fields[key],
-        value: (typeof props.fields[key] === "object" && !(props.fields[key] instanceof Array)) ? props.fields[key].value : props.fields[key]
+        value: (props.fields[key] && typeof props.fields[key] === "object") ? props.fields[key].value : props.fields[key]
       });
     });
     return fields;
@@ -29,7 +29,9 @@ class EditMerchant extends Component {
       name: "",
       phone: "",
       address: "",
-      area: [],
+      position: "",
+      longitude: "",
+      latitude: "",
       logo: "",
       password: "",
       distributionFee: "",
@@ -48,7 +50,7 @@ class EditMerchant extends Component {
     getMerchantApi(this.props.match.params.id)
     .then(res => {
       this.setState({
-        fields: { ...res.data, area: [res.data.provinceId || 0, res.data.cityId || 0, res.data.areaId || 0] }
+        fields: { ...res.data }
       }, () => {
         this.setState({
           initFlag: true
