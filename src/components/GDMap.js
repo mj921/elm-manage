@@ -40,7 +40,7 @@ export default class GDMap extends Component {
           });
           var cpoint = [data.position.lng, data.position.lat]; //中心点坐标
           placeSearch.searchNearBy("", cpoint, 200, (status, result) => {
-            this.searchHandle(status, result, amap);
+            this.searchHandle(status, result);
           });
         });
       });
@@ -58,7 +58,7 @@ export default class GDMap extends Component {
   choiceAddress(item) {
     this.props.onChange(item);
   }
-  searchHandle(status, result, amap) {
+  searchHandle(status, result) {
     if (status === "complete" && result.info === "OK" && result.poiList) {
       this.setState({
         searchData: [...result.poiList.pois]
@@ -67,7 +67,7 @@ export default class GDMap extends Component {
   }
   iptSearch(value) {
     this.state.placeSearch.search(value, (status, result) => {
-      this.searchHandle(status, result, this.state.amap);
+      this.searchHandle(status, result);
     });
   }
   render() {

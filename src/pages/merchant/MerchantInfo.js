@@ -96,12 +96,12 @@ class MerchantInfo extends Component {
             </Form.Item>
             <Form.Item label="登录密码">{ merchant.password }</Form.Item>
             <Form.Item label="商户地址">{ merchant.position + " " + merchant.address }</Form.Item>
-            <Form.Item label="配送费">{ merchant.distributionFee } 元</Form.Item>
+            {/* <Form.Item label="配送费">{ merchant.distributionFee } 元</Form.Item>
             <Form.Item label="起送价">{ merchant.startDistributionFee } 元</Form.Item>
             <Form.Item label="配送时间">{ this.distributionTime }</Form.Item>
             <Form.Item label="距离">{ merchant.distance < 1000 ? merchant.distance + " m" : (merchant.distance / 1000).toFixed(1) + " km" }</Form.Item>
             <Form.Item label="月售">{ merchant.monthSale }</Form.Item>
-            <Form.Item label="评分">{ merchant.score }</Form.Item>
+            <Form.Item label="评分">{ merchant.score }</Form.Item> */}
           </Form>
         </Card>
       </div>

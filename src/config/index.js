@@ -10,4 +10,4 @@ export const Page = {
   showSizeChanger: true,
   hideOnSinglePage: false,
 };
-export const qiniuHost = "http://ptse2w3v5.bkt.clouddn.com";
+export const qiniuHost = "http://q04p1eawx.bkt.clouddn.com";

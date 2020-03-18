@@ -51,3 +51,11 @@ export const EditDish = Loadable({
   loader: () => import("../pages/merchant/DishManage/EditDish"),
   loading: RouterLoading
 });
+export const ReserveManage = Loadable({
+  loader: () => import("../pages/merchant/ReserveManage"),
+  loading: RouterLoading
+});
+export const OrderManage = Loadable({
+  loader: () => import("../pages/merchant/OrderManage"),
+  loading: RouterLoading
+});

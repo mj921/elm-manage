@@ -1,4 +1,5 @@
-import { MerchantManage, AddMerchant, EditMerchant, AuditMerchant, MerchantInfo, EditMerchantInfo, DishManage, AddDish, EditDish } from "./loadComponents";
+import { MerchantManage, AddMerchant, EditMerchant, AuditMerchant, MerchantInfo, EditMerchantInfo, DishManage, AddDish, EditDish, OrderManage } from "./loadComponents";
+import ReserveManage from "../pages/merchant/ReserveManage";
 
 const adminRoutes = {
   "/merchant-manage": {
@@ -56,7 +57,19 @@ const merchantRoutes = {
     label: "编辑菜品",
     component: EditDish,
     selectedKey: "dish-manage"
-  }
+  },
+  "/reserve-manage": {
+    path: "/reserve-manage",
+    label: "预定管理",
+    component: ReserveManage,
+    selectedKey: "reserve-manage"
+  },
+  "/order-manage": {
+    path: "/order-manage",
+    label: "订单管理",
+    component: OrderManage,
+    selectedKey: "order-manage"
+  },
 };
 
 export const routeConfig = {

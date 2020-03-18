@@ -55,7 +55,7 @@ class UploadQiniu extends Component {
               className="upload-container"
               style={{ cursor: this.state.uploadData.token ? "pointer" : "not-allowed" }}>
               <Upload
-                action="http://upload.qiniup.com"
+                action="http://up-z2.qiniup.com"
                 data={ this.state.uploadData }
                 onChange={ e => { this.uploadChange(e); }}
                 disabled={ !this.state.uploadData.token }
